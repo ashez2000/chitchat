@@ -1,3 +1,5 @@
+import MainLayout from '../layouts/main'
+
 export default function HomePage() {
-  return <div>HomePage</div>
+  return <MainLayout>HomePage</MainLayout>
 }
