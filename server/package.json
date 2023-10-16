@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "nodemon src/main.js"
+    "dev": "nodemon src/main.js",
+    "seed": "node seed/main.js"
   },
   "dependencies": {
     "@prisma/client": "^5.4.2",

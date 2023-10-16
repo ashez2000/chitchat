@@ -13,24 +13,33 @@ model User {
   username String @unique
   password String
 
-  chats    Chat[]
-  messages Message[]
+  ChatUser ChatUser[]
+  Message  Message[]
 }
 
 model Chat {
   id String @id @default(cuid())
 
-  users    User[]
-  messages Message[]
+  ChatUser ChatUser[]
+  Message  Message[]
+}
+
+model ChatUser {
+  chatId String
+  userId String
+
+  chat Chat @relation(fields: [chatId], references: [id])
+  user User @relation(fields: [userId], references: [id])
+
+  @@id([chatId, userId])
 }
 
 model Message {
   id        String   @id @default(cuid())
   content   String
   createdAt DateTime @default(now())
-
-  chatId String
-  userId String
+  chatId    String
+  userId    String
 
   chat Chat @relation(fields: [chatId], references: [id])
   user User @relation(fields: [userId], references: [id])
