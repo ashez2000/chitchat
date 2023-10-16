@@ -8,6 +8,7 @@ import cookieParser from 'cookie-parser'
 import { notfound, errorHandler } from './middlewares/error.js'
 import auth from './routes/auth.js'
 import chat from './routes/chat.js'
+import users from './routes/user.js'
 
 const app = express()
 
@@ -24,6 +25,7 @@ app.use(cookieParser())
 app.get('/', (req, res) => res.send('Hello world'))
 app.use('/api/auth', auth)
 app.use('/api/chat', chat)
+app.use('/api/users', users)
 
 app.use(notfound)
 app.use(errorHandler)
