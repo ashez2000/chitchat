@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import api from '../api'
 
 export default function UserChats() {
@@ -19,7 +20,9 @@ export default function UserChats() {
     <div>
       {chats.map((c) => (
         <div className="px-3 py-2 border border-primary" key={c.chatId}>
-          {c.user.name} @{c.user.username}
+          <Link to={`/chat/${c.chatId}`}>
+            {c.user.name} @{c.user.username}
+          </Link>
         </div>
       ))}
     </div>
