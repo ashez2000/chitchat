@@ -1,5 +1,13 @@
+import UserChats from '../components/user-chats'
 import MainLayout from '../layouts/main'
 
 export default function HomePage() {
-  return <MainLayout>HomePage</MainLayout>
+  return (
+    <MainLayout>
+      Homepage
+      <hr />
+      User Chats
+      <UserChats />
+    </MainLayout>
+  )
 }
