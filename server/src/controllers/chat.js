@@ -111,3 +111,30 @@ export async function getChatMessages(req, res) {
 
   res.status(200).json({ messages })
 }
+
+export async function createChatMessage(req, res) {
+  const { chatId } = req.params
+  const { id: userId } = req.user
+  const { content } = req.body
+
+  const isChat = await db.chatUser.findFirst({
+    where: {
+      chatId,
+      userId,
+    },
+  })
+
+  if (!isChat) {
+    throw new AppError('Forbidden', 403)
+  }
+
+  const message = await db.message.create({
+    data: {
+      content,
+      chatId,
+      userId,
+    },
+  })
+
+  res.status(200).json({ message })
+}
