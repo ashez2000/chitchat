@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Navigate, useNavigate } from 'react-router-dom'
 import api from '../api'
 import useUser from '../hooks/user'
+import Header from '../components/header'
 
 export default function MainLayout(props) {
   const [loading, setLoading] = useState(true)
-  const { setUser } = useUser()
+  const { user, setUser } = useUser()
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -20,9 +21,18 @@ export default function MainLayout(props) {
       })
   }, [])
 
+  if (!user) {
+    return <Navigate to="/signin" />
+  }
+
   if (loading) {
     return <div className="container">Loading...</div>
   }
 
-  return <main className="container">{props.children}</main>
+  return (
+    <main className="container">
+      <Header />
+      {props.children}
+    </main>
+  )
 }

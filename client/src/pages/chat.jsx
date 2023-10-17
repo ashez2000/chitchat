@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { Navigate, useParams } from 'react-router-dom'
 import MainLayout from '../layouts/main'
 import api from '../api'
 import useUser from '../hooks/user'
@@ -21,6 +21,10 @@ export default function ChatsPage() {
         alert('Error fetching messages')
       })
   }, [])
+
+  if (!user) {
+    return <Navigate to="/signin" />
+  }
 
   return (
     <MainLayout>
