@@ -5,5 +5,6 @@ import * as chat from '../controllers/chat.js'
 const router = Router()
 
 router.post('/', authenticate, chat.createChat)
+router.get('/', authenticate, chat.getChats)
 
 export default router

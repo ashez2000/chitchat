@@ -54,3 +54,33 @@ export async function createChat(req, res) {
 
   res.status(200).json({ chat })
 }
+
+export async function getChats(req, res) {
+  const { id: userId } = req.user
+  const chats = await db.chatUser.findMany({
+    where: {
+      userId,
+    },
+  })
+
+  const users = await db.chatUser.findMany({
+    where: {
+      chatId: {
+        in: chats.map((c) => c.chatId),
+      },
+      userId: {
+        not: userId,
+      },
+    },
+    include: {
+      user: {
+        select: {
+          name: true,
+          username: true,
+        },
+      },
+    },
+  })
+
+  res.status(200).json({ chats: users })
+}
