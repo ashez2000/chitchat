@@ -4,6 +4,8 @@ import MainLayout from '../layouts/main'
 import api from '../api'
 import useUser from '../hooks/user'
 
+import MessageForm from '../components/message-form'
+
 export default function ChatsPage() {
   const { chatId } = useParams()
   const [messages, setMessages] = useState([])
@@ -33,6 +35,7 @@ export default function ChatsPage() {
           </div>
         ))}
       </div>
+      <MessageForm chatId={chatId} />
     </MainLayout>
   )
 }
