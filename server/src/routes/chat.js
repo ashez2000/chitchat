@@ -6,5 +6,6 @@ const router = Router()
 
 router.post('/', authenticate, chat.createChat)
 router.get('/', authenticate, chat.getChats)
+router.get('/:chatId', authenticate, chat.getChatMessages)
 
 export default router

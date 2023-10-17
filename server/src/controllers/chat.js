@@ -84,3 +84,30 @@ export async function getChats(req, res) {
 
   res.status(200).json({ chats: users })
 }
+
+export async function getChatMessages(req, res) {
+  const { chatId } = req.params
+  const { id: userId } = req.user
+
+  const isChat = await db.chatUser.findFirst({
+    where: {
+      chatId,
+      userId,
+    },
+  })
+
+  if (!isChat) {
+    throw new AppError('Forbidden', 403)
+  }
+
+  const messages = await db.message.findMany({
+    where: {
+      chatId,
+    },
+    orderBy: {
+      createdAt: 'desc',
+    },
+  })
+
+  res.status(200).json({ messages })
+}
