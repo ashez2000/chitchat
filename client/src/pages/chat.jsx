@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react'
 import { Navigate, useParams } from 'react-router-dom'
-import MainLayout from '../layouts/main'
+
 import api from '../api'
+import { socket } from '../socket'
+
+import MainLayout from '../layouts/main'
 import useUser from '../hooks/user'
 
 import MessageForm from '../components/message-form'
@@ -21,6 +24,14 @@ export default function ChatsPage() {
         alert('Error fetching messages')
       })
   }, [])
+
+  useEffect(() => {
+    socket.emit('join_chat', { chatId })
+  }, [])
+
+  socket.on('chat_message', (data) => {
+    setMessages([data.message, ...messages])
+  })
 
   if (!user) {
     return <Navigate to="/signin" />

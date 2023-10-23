@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon src/main.js",
-    "seed": "node seed/main.js"
+    "seed": "rm prisma/db.sqlite && prisma db push && node seed/main.js"
   },
   "dependencies": {
     "@prisma/client": "^5.4.2",
@@ -14,7 +14,10 @@
     "express": "^4.18.2",
     "express-async-errors": "^3.1.1",
     "fast-jwt": "^3.3.1",
-    "morgan": "^1.10.0"
+    "install": "^0.13.0",
+    "morgan": "^1.10.0",
+    "npm": "^10.2.1",
+    "socket.io": "^4.7.2"
   },
   "devDependencies": {
     "nodemon": "^3.0.1",

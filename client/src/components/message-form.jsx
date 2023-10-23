@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import api from '../api'
+import { socket } from '../socket'
 
 export default function MessageForm({ chatId }) {
   const [content, setContent] = useState('')
@@ -9,6 +10,7 @@ export default function MessageForm({ chatId }) {
     try {
       const res = await api.post(`/chat/${chatId}/message`, { content })
       console.log(res.data)
+      socket.emit('chat_message', chatId, res.data)
     } catch (err) {
       alert('Could not send message')
     } finally {
