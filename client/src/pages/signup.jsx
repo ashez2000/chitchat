@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate, Navigate } from 'react-router-dom'
+import { useNavigate, Navigate, Link } from 'react-router-dom'
 
 import api from '../api'
 import useUser from '../hooks/user'
@@ -38,7 +38,7 @@ export default function SignupPage() {
     <AuthLayout>
       <h1 className="fw-bold text-center mb-3">Signup</h1>
 
-      <div className="col-3 mx-auto">
+      <div className="col-5 mx-auto">
         <form onSubmit={handleSubmit}>
           <input
             className="form-control mb-3"
@@ -67,6 +67,9 @@ export default function SignupPage() {
           <button className="btn btn-primary">Submit</button>
         </form>
         <hr />
+        <p className="text-center">
+          Already have an account? <Link to="/signin">Signin</Link>
+        </p>
       </div>
     </AuthLayout>
   )
