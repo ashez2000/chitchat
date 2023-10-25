@@ -5,6 +5,7 @@
   "scripts": {
     "start": "node src/main.js",
     "dev": "nodemon src/main.js",
+    "build": "prisma db push",
     "dev:prod": "cross-env NODE_ENV=production nodemon src/main.js",
     "seed": "rm prisma/db.sqlite && prisma db push && node seed/main.js"
   },
