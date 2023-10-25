@@ -1,0 +1,9 @@
+{
+  "name": "simplechat",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "npm start --prefix server",
+    "deps": "npm i --prefix client && npm i --prefix server",
+    "build": "npm run build --prefix client"
+  }
+}
