@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Navigate, useParams } from 'react-router-dom'
+import { Link, Navigate, useParams } from 'react-router-dom'
 
 import api from '../api'
 import { socket } from '../socket'
@@ -39,13 +39,16 @@ export default function ChatsPage() {
 
   return (
     <MainLayout>
-      <h1>Chat</h1>
-      <hr />
-      <div className="d-flex flex-column-reverse">
+      <div className="mb-3">
+        <Link to="/" className="btn btn-sm btn-secondary">
+          Back
+        </Link>
+      </div>
+      <div className="d-flex flex-column-reverse border p-3 mb-3">
         {messages.map((m) => (
           <div key={m.id}>
             <p className={user.id === m.userId ? 'float-end' : ''}>
-              {m.content}
+              <span className="border px-2 py-1">{m.content}</span>
             </p>
           </div>
         ))}
