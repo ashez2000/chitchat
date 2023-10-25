@@ -1,5 +1,6 @@
 import 'express-async-errors'
 
+import path from 'node:path'
 import express from 'express'
 import morgan from 'morgan'
 import cors from 'cors'
@@ -21,6 +22,12 @@ app.use(
   })
 )
 app.use(cookieParser())
+
+if (process.env.NODE_ENV === 'production') {
+  const webpath = path.resolve(process.cwd(), '..', 'client', 'dist')
+  app.use(express.static(path.join(webpath)))
+  app.get('*', (req, res) => res.sendFile(path.resolve(webpath, 'index.html')))
+}
 
 app.get('/', (req, res) => res.send('Hello world'))
 app.use('/api/auth', auth)

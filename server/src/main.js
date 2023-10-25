@@ -16,13 +16,11 @@ const io = new Server(server, {
 })
 
 io.on('connection', (socket) => {
-  console.log('user connected')
   socket.on('join_chat', ({ chatId }) => {
     socket.join(chatId)
   })
 
   socket.on('chat_message', (chatId, message) => {
-    console.log('chat_message', chatId, message)
     io.to(chatId).emit('chat_message', message)
   })
 })
