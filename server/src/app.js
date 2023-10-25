@@ -23,16 +23,15 @@ app.use(
 )
 app.use(cookieParser())
 
+app.use('/api/auth', auth)
+app.use('/api/chat', chat)
+app.use('/api/users', users)
+
 if (process.env.NODE_ENV === 'production') {
   const webpath = path.resolve(process.cwd(), '..', 'client', 'dist')
   app.use(express.static(path.join(webpath)))
   app.get('*', (req, res) => res.sendFile(path.resolve(webpath, 'index.html')))
 }
-
-app.get('/', (req, res) => res.send('Hello world'))
-app.use('/api/auth', auth)
-app.use('/api/chat', chat)
-app.use('/api/users', users)
 
 app.use(notfound)
 app.use(errorHandler)

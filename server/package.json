@@ -4,12 +4,14 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon src/main.js",
+    "dev:prod": "cross-env NODE_ENV=production nodemon src/main.js",
     "seed": "rm prisma/db.sqlite && prisma db push && node seed/main.js"
   },
   "dependencies": {
     "@prisma/client": "^5.4.2",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "express-async-errors": "^3.1.1",
