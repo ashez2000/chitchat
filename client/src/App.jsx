@@ -3,6 +3,7 @@ import HomePage from './pages/home'
 import SignupPage from './pages/signup'
 import SigninPage from './pages/signin'
 import ChatsPage from './pages/chat'
+import UserSearchPage from './pages/user-search'
 
 import useUser from './hooks/user'
 import { useEffect } from 'react'
@@ -29,6 +30,7 @@ export default function App() {
       <Route path="/signup" element={<SignupPage />} />
       <Route path="/signin" element={<SigninPage />} />
       <Route path="/chat/:chatId" element={<ChatsPage />} />
+      <Route path="/search-users" element={<UserSearchPage />} />
     </Routes>
   )
 }
