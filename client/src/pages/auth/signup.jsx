@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import { useNavigate, Navigate, Link } from 'react-router-dom'
+import { Navigate, Link } from 'react-router-dom'
 
-import api from '../../api'
+import { signup } from '../../services/auth'
 import useUser from '../../hooks/user'
 import AuthLayout from '../../layouts/auth'
 
@@ -9,25 +9,12 @@ export default function SignupPage() {
   const [name, setName] = useState('')
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [loading, setLoading] = useState(false)
-
-  const navigate = useNavigate()
   const { user, setUser } = useUser()
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault()
-
-    try {
-      const res = await api.post('/auth/signup', {
-        name,
-        username,
-        password,
-      })
-      setUser(res.data.user)
-      navigate('/')
-    } catch (err) {
-      console.error(err)
-    }
+    const data = { name, username, password }
+    signup(data).then(setUser).catch(console.error)
   }
 
   if (user) {

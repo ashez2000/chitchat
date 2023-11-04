@@ -8,11 +8,24 @@ const api = axios.create({
   withCredentials: true,
 })
 
-export const signup = () => {}
-export const signin = () => {}
-export const signout = () => {}
+/** signup :: SignupData -> Promise[User] */
+export const signup = async (data) => {
+  const res = await api.post('/auth/signup', data)
+  return res.data.user
+}
 
-/** profile :: () -> Promise[User] */
+/** signin :: SigninData -> Promise[User] */
+export const signin = async (data) => {
+  const res = await api.post('/auth/signin', data)
+  return res.data.user
+}
+
+/** signout :: () -> Promise[] */
+export const signout = async () => {
+  await api.put('/auth/signout')
+}
+
+/** getProfile :: () -> Promise[User] */
 export const getProfile = async () => {
   const res = await api.get('/auth/profile')
   return res.data.user

@@ -1,31 +1,19 @@
 import { useState } from 'react'
-import { useNavigate, Navigate, Link } from 'react-router-dom'
+import { Navigate, Link } from 'react-router-dom'
 
-import api from '../../api'
+import { signin } from '../../services/auth'
 import useUser from '../../hooks/user'
 import AuthLayout from '../../layouts/auth'
 
 export default function SigninPage() {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [loading, setLoading] = useState(false)
-
-  const navigate = useNavigate()
   const { user, setUser } = useUser()
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault()
-
-    try {
-      const res = await api.post('/auth/signin', {
-        username,
-        password,
-      })
-      setUser(res.data.user)
-      navigate('/')
-    } catch (err) {
-      console.error(err)
-    }
+    const data = { username, password }
+    signin(data).then(setUser).catch(console.error)
   }
 
   if (user) {

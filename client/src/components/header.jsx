@@ -1,13 +1,13 @@
-import useUser from '../hooks/user'
-import api from '../api'
 import { Link } from 'react-router-dom'
+import useUser from '../hooks/user'
+import { signout } from '../services/auth'
 
 export default function Header() {
   const { user, setUser } = useUser()
 
-  const signout = async () => {
+  const handleSignout = async () => {
     setUser(null)
-    await api.put('/auth/signout')
+    await signout()
   }
 
   return (
@@ -17,7 +17,7 @@ export default function Header() {
         <span>Signed in as {user && `@${user.username}`}</span>
       </div>
       {user && (
-        <button className="btn btn-sm btn-secondary" onClick={signout}>
+        <button className="btn btn-sm btn-secondary" onClick={handleSignout}>
           Signout
         </button>
       )}
