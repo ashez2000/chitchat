@@ -1,7 +1,7 @@
 import { Routes, Route, useNavigate } from 'react-router-dom'
 import HomePage from './pages/home'
-import SignupPage from './pages/signup'
-import SigninPage from './pages/signin'
+import SignupPage from './pages/auth/signup'
+import SigninPage from './pages/auth/signin'
 import ChatsPage from './pages/chat'
 import UserSearchPage from './pages/user-search'
 
