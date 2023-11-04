@@ -1,4 +1,6 @@
 import { Routes, Route, useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
+
 import HomePage from './pages/home'
 import SignupPage from './pages/auth/signup'
 import SigninPage from './pages/auth/signin'
@@ -6,22 +8,16 @@ import ChatsPage from './pages/chat'
 import UserSearchPage from './pages/user-search'
 
 import useUser from './hooks/user'
-import { useEffect } from 'react'
-import api from './api'
+import { getProfile } from './services/auth'
 
 export default function App() {
   const { setUser } = useUser()
   const navigate = useNavigate()
 
   useEffect(() => {
-    api
-      .get('/auth/profile')
-      .then((res) => {
-        setUser(res.data.user)
-      })
-      .catch((err) => {
-        navigate('/signin')
-      })
+    getProfile()
+      .then((user) => setUser(user))
+      .catch(() => navigate('/signin'))
   }, [])
 
   return (
