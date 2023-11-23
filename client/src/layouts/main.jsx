@@ -3,9 +3,19 @@ import useUser from '../hooks/user'
 
 import Header from '../components/header'
 import SideNav from '../components/sidenav'
+import { useEffect } from 'react'
+import { socket } from '../socket'
 
 export default function MainLayout(props) {
   const { user } = useUser()
+
+  useEffect(() => {
+    socket.connect()
+
+    return () => {
+      socket.disconnect()
+    }
+  }, [])
 
   if (!user) {
     return <Navigate to="/signin" />
