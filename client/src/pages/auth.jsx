@@ -13,13 +13,22 @@ export default function AuthPage({ isSignup }) {
 
   return (
     <AuthLayout>
-      <h1 className="fw-bold text-center mb-3">
-        {isSignup ? 'Signup' : 'Signin'}
-      </h1>
+      <div className="d-flex gap-3 justify-content-center align-items-center my-5">
+        <img
+          className="img-thumbnail"
+          src="/simplechat.png"
+          alt="Simplechat Icon"
+        />
+        <h1>Simplechat</h1>
+      </div>
 
       <div className="col-5 mx-auto">
+        <h4 className="mb-3 ms-3">{isSignup ? 'Signup' : 'Signin'}</h4>
+
         <AuthForm isSignup={isSignup} />
+
         <hr />
+
         <p className="text-center">
           {isSignup ? (
             <>
