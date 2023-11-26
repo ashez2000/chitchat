@@ -17,10 +17,10 @@ export default function ChatsPage() {
   useEffect(() => {
     api
       .get(`/chat/${chatId}`)
-      .then((res) => {
+      .then(res => {
         setMessages(res.data.messages)
       })
-      .catch((err) => {
+      .catch(err => {
         alert('Error fetching messages')
       })
   }, [])
@@ -29,7 +29,7 @@ export default function ChatsPage() {
     socket.emit('join_chat', { chatId })
   }, [])
 
-  socket.on('chat_message', (data) => {
+  socket.on('chat_message', data => {
     setMessages([data.message, ...messages])
   })
 
@@ -39,13 +39,8 @@ export default function ChatsPage() {
 
   return (
     <MainLayout>
-      <div className="mb-3">
-        <Link to="/" className="btn btn-sm btn-secondary">
-          Back
-        </Link>
-      </div>
       <div className="d-flex flex-column-reverse border p-3 mb-3">
-        {messages.map((m) => (
+        {messages.map(m => (
           <div key={m.id}>
             <p className={user.id === m.userId ? 'float-end' : ''}>
               <span className="border px-2 py-1">{m.content}</span>

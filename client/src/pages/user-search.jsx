@@ -12,30 +12,27 @@ export default function UserSearchPage() {
   const handleSearch = () => {
     api
       .get('/users?search=' + search)
-      .then((res) => {
+      .then(res => {
         setResult(res.data.users)
       })
-      .catch((err) => alert('something went wrong'))
+      .catch(err => alert('something went wrong'))
   }
 
   return (
     <MainLayout>
-      <Link to="/" className="btn btn-sm btn-secondary mb-3">
-        Back
-      </Link>
       <input
         className="form-control mb-3"
         type="text"
         placeholder="search users"
         value={search}
-        onChange={(e) => setSearch(e.target.value)}
+        onChange={e => setSearch(e.target.value)}
       />
       <button className="btn btn-sm btn-secondary" onClick={handleSearch}>
         Search
       </button>
       <hr />
       <div className="d-flex flex-column gap-3">
-        {result.map((r) => (
+        {result.map(r => (
           <div key={r.id} className="card p-2 d-flex">
             <p>
               {r.name}@{r.username}
