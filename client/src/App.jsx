@@ -1,5 +1,5 @@
+import { useEffect, useState } from 'react'
 import { Routes, Route, useNavigate } from 'react-router-dom'
-import { useEffect } from 'react'
 
 import HomePage from './pages/home'
 import AuthPage from './pages/auth'
@@ -10,6 +10,7 @@ import useUser from './hooks/user'
 import { getProfile } from './services/auth'
 
 export default function App() {
+  const [isLoading, setIsLoading] = useState(true)
   const { setUser } = useUser()
   const navigate = useNavigate()
 
@@ -17,7 +18,12 @@ export default function App() {
     getProfile()
       .then(user => setUser(user))
       .catch(() => navigate('/signin'))
+      .finally(() => setIsLoading(false))
   }, [])
+
+  if (isLoading) {
+    return null
+  }
 
   return (
     <Routes>
