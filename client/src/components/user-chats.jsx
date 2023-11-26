@@ -1,28 +1,25 @@
-import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import useSwr from 'swr'
+
 import api from '../api'
 
 export default function UserChats() {
-  const [chats, setChats] = useState([])
+  const getChats = async () => (await api.get('/chat')).data.chats
+  const { data, isLoading } = useSwr('/api/chats', getChats)
 
-  useEffect(() => {
-    api
-      .get('/chat')
-      .then((res) => {
-        setChats(res.data.chats)
-      })
-      .catch((err) => {
-        alert('Error fetching user chats')
-      })
-  }, [])
+  if (isLoading) {
+    return <div>Loading...</div>
+  }
 
   return (
     <div>
-      {chats.map((c) => (
-        <div className="px-3 py-2 border border-primary" key={c.chatId}>
-          <Link to={`/chat/${c.chatId}`}>
-            {c.user.name} @{c.user.username}
-          </Link>
+      {data.map(c => (
+        <div className="card" key={c.chatId}>
+          <div className="card-body">
+            <Link to={`/chat/${c.chatId}`}>
+              {c.user.name} @{c.user.username}
+            </Link>
+          </div>
         </div>
       ))}
     </div>
