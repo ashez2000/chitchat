@@ -1,3 +1,7 @@
+body {
+  height: 90vh;
+}
+
 .container {
-  max-width: 700px;
+  max-width: 512px;
 }
