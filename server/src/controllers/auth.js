@@ -9,6 +9,12 @@ const signToken = createSigner({ key: secret })
 
 export async function signup(req, res) {
   const { name, username, password } = req.body
+
+  const exist = await db.user.findUnique({ where: { username } })
+  if (exist !== null) {
+    throw new AppError('username already exist', 400)
+  }
+
   const user = await db.user.create({
     data: {
       name,
@@ -16,6 +22,7 @@ export async function signup(req, res) {
       password,
     },
   })
+
   const token = signToken(user)
   res.cookie('token', token)
   res.status(201).json({

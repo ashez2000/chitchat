@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Routes, Route, useNavigate } from 'react-router-dom'
+import { Toaster } from 'react-hot-toast'
 
 import HomePage from './pages/home'
 import AuthPage from './pages/auth'
@@ -26,12 +27,15 @@ export default function App() {
   }
 
   return (
-    <Routes>
-      <Route path="/" element={<HomePage />} />
-      <Route path="/signup" element={<AuthPage isSignup={true} />} />
-      <Route path="/signin" element={<AuthPage isSignup={false} />} />
-      <Route path="/chat/:chatId" element={<ChatsPage />} />
-      <Route path="/search-users" element={<UserSearchPage />} />
-    </Routes>
+    <>
+      <Toaster />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/signup" element={<AuthPage isSignup={true} />} />
+        <Route path="/signin" element={<AuthPage isSignup={false} />} />
+        <Route path="/chat/:chatId" element={<ChatsPage />} />
+        <Route path="/search-users" element={<UserSearchPage />} />
+      </Routes>
+    </>
   )
 }

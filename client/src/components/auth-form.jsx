@@ -1,6 +1,6 @@
-import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import toast from 'react-hot-toast'
 
 import { signinSchema, signupSchema } from '../schemas/auth'
 import { signin, signup } from '../services/auth'
@@ -27,11 +27,13 @@ export default function AuthForm({ isSignup }) {
 
   const { setUser } = useUser()
 
+  const errToast = err => toast.error(err.response.data.message)
+
   const onSubmit = data => {
     if (isSignup) {
-      signup(data).then(setUser).catch(console.error)
+      signup(data).then(setUser).catch(errToast)
     } else {
-      signin(data).then(setUser).catch(console.error)
+      signin(data).then(setUser).catch(errToast)
     }
   }
 
