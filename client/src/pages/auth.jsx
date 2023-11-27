@@ -22,8 +22,8 @@ export default function AuthPage({ isSignup }) {
         <h1>Simplechat</h1>
       </div>
 
-      <div className="col-5 mx-auto">
-        <h4 className="mb-3 ms-3">{isSignup ? 'Signup' : 'Signin'}</h4>
+      <div className="col-10 col-sm-6 mx-auto">
+        <h4 className="mb-3">{isSignup ? 'Signup' : 'Signin'}</h4>
 
         <AuthForm isSignup={isSignup} />
 

@@ -1,18 +1,33 @@
 import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
 
+import { signinSchema, signupSchema } from '../schemas/auth'
 import { signin, signup } from '../services/auth'
 import useUser from '../hooks/user'
 
+const FormInput = ({ register, error, label, ...props }) => {
+  return (
+    <div className="mb-3">
+      <label>{label}</label>
+      <input className="form-control mb-2" {...register} {...props} />
+      {error && <div className="text-danger">{error.message}</div>}
+    </div>
+  )
+}
+
 export default function AuthForm({ isSignup }) {
-  const [name, setName] = useState('')
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(isSignup ? signupSchema : signinSchema),
+  })
+
   const { setUser } = useUser()
 
-  const handleSubmit = e => {
-    e.preventDefault()
-    const data = { name, username, password }
-
+  const onSubmit = data => {
     if (isSignup) {
       signup(data).then(setUser).catch(console.error)
     } else {
@@ -21,31 +36,28 @@ export default function AuthForm({ isSignup }) {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       {isSignup && (
-        <input
-          className="form-control mb-3"
+        <FormInput
+          label="Name"
           type="text"
-          placeholder="Name"
-          value={name}
-          onChange={e => setName(e.target.value)}
+          register={register('name')}
+          error={errors.name}
         />
       )}
 
-      <input
-        className="form-control mb-3"
+      <FormInput
+        label="Username"
         type="text"
-        placeholder="Username"
-        value={username}
-        onChange={e => setUsername(e.target.value)}
+        register={register('username')}
+        error={errors.username}
       />
 
-      <input
-        className="form-control mb-3"
+      <FormInput
+        label="Password"
         type="password"
-        placeholder="Password"
-        value={password}
-        onChange={e => setPassword(e.target.value)}
+        register={register('password')}
+        error={errors.password}
       />
 
       <button className="btn btn-primary">Submit</button>
