@@ -5,9 +5,9 @@
   "scripts": {
     "start": "node src/main.js",
     "dev": "nodemon src/main.js",
-    "build": "prisma db push",
     "dev:prod": "cross-env NODE_ENV=production nodemon src/main.js",
-    "seed": "rm prisma/db.sqlite && prisma db push && node seed/main.js"
+    "build": "prisma db push",
+    "db:push": "prisma db push"
   },
   "dependencies": {
     "@prisma/client": "^5.4.2",
@@ -20,7 +20,6 @@
     "express-async-errors": "^3.1.1",
     "fast-jwt": "^3.3.3",
     "morgan": "^1.10.0",
-    "npm": "^10.2.1",
     "socket.io": "^4.7.2"
   },
   "devDependencies": {
