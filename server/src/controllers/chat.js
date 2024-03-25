@@ -5,24 +5,14 @@ export async function createChat(req, res) {
   const { id: currentUserId } = req.user
   const { userId } = req.body
 
-  const isChat = await db.chat.findFirst({
-    where: {
-      AND: {
-        ChatUser: {
-          some: {
-            userId: currentUserId,
-          },
-        },
-        ChatUser: {
-          some: {
-            userId: userId,
-          },
-        },
-      },
-    },
-  })
+  const isChat = await db.$queryRaw`
+    SELECT uc1.chatId
+    FROM ChatUser uc1
+    JOIN ChatUser uc2 ON uc1.chatId = uc2.chatId
+    WHERE uc1.userId = ${currentUserId} AND uc2.userId = ${userId}
+  `
 
-  if (isChat) {
+  if (isChat.length !== 0) {
     throw new AppError('Chat already exist', 400)
   }
 
