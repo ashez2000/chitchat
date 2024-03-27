@@ -1,61 +1,68 @@
+import bcrypt from 'bcryptjs'
 import { AppError } from '../utils/app-error.js'
 import { signToken } from '../utils/jwt.js'
-import * as userRepo from '../repository/user.js'
+import * as repo from '../repository/mod.js'
 
-// signup
-// route: POST /api/auth/signup
-export async function signup(req, res) {
-  const { name, username, password } = req.body
-
-  let user = await userRepo.findByUsername(username)
-  if (user) {
-    throw new AppError('username already exist', 400)
-  }
-
-  user = await userRepo.create(name, username, password)
-  sendTokenResponse(user, res)
-}
-
-// signin
-// route: POST /api/auth/signin
-export async function signin(req, res) {
+/**
+ * Signup new user
+ * @route POST /api/auth/signup
+ */
+export const signup = (req, res) => {
   const { username, password } = req.body
-  const user = await userRepo.findByCredential(username, password)
+  const user = repo.user.create({ username, password })
+  sendTokenResponse(user, res)
+}
 
+/**
+ * Signin user
+ * @route POST /api/auth/signin
+ */
+export const signin = (req, res) => {
+  const { username, password } = req.body
+
+  const user = repo.user.findByUsername(username)
   if (!user) {
-    throw new AppError('invalid username or password', 400)
+    throw new AppError('Invalid username or password', 401)
+  }
+
+  // verify password
+  const isMatch = bcrypt.compareSync(password, user.password)
+  if (!isMatch) {
+    throw new AppError('Invalid username or password', 401)
   }
 
   sendTokenResponse(user, res)
 }
 
-// signout
-// route: POST /api/auth/signout
-export async function signout(req, res) {
+/**
+ * Signout user
+ * @route POST /api/auth/signout
+ */
+export const signout = (req, res) => {
   res.clearCookie('token')
   res.status(200).json({})
 }
 
-// profile
-// route: GET /api/auth/profile
-export async function profile(req, res) {
-  const user = await userRepo.findProfileById(req.user.id)
+/**
+ * Get user profile
+ * @route GET /api/auth/profile
+ */
+export const profile = (req, res) => {
+  const user = repo.user.findById(req.user.id)
   if (!user) {
     throw new AppError('user not found', 404)
   }
 
   res.status(200).json({
-    user: {
-      id: user.id,
-      name: user.name,
-      username: user.username,
-    },
+    id: user.id,
+    username: user.username,
   })
 }
 
-// helper func
+/** Returns response with jwt cookie and user data */
 const sendTokenResponse = (user, res) => {
-  const token = signToken(user.id)
+  const { id, username } = user
+  const token = signToken(id)
 
   res.cookie('token', token, {
     maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
@@ -64,12 +71,7 @@ const sendTokenResponse = (user, res) => {
   })
 
   res.status(200).json({
-    user: {
-      id: user.id,
-      name: user.name,
-      username: user.username,
-    },
-
-    token,
+    id,
+    username,
   })
 }

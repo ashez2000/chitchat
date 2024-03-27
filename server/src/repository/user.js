@@ -9,9 +9,16 @@ export const create = ({ username, password }) => {
   const id = uuid()
   const hash = bcrypt.hashSync(password)
 
-  return db
-    .prepare('INSERT INTO users (id, username, password) VALUES (?, ?, ?)')
-    .run(id, username, hash)
+  db.prepare('INSERT INTO users (id, username, password) VALUES (?, ?, ?)').run(
+    id,
+    username,
+    hash
+  )
+
+  return {
+    id,
+    username,
+  }
 }
 
 /**

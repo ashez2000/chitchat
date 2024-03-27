@@ -1,9 +1,15 @@
-import { v4 as uuid } from 'uuid'
-import * as repo from './repository/mod.js'
-import { migrate, db } from './db/mod.js'
+import http from 'node:http'
 
-migrate()
+import { migrate } from './db/mod.js'
+import app from './app.js'
 
-const res = repo.user.search('')
+const main = () => {
+  migrate()
 
-console.log(res)
+  const server = http.createServer(app)
+  server.listen(3000, () => {
+    console.log('Listening on port', 3000)
+  })
+}
+
+main()
