@@ -1,0 +1,11 @@
+import { api } from './axios'
+
+export const getMessages = async (userId) => {
+  const res = await api.post(`/api/chats/${userId}`, data)
+  return res.data
+}
+
+export const createMessage = async (content, userId) => {
+  const res = await api.post(`/api/chats/${userId}`, { content })
+  return res.data
+}
