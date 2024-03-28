@@ -1,4 +1,4 @@
-export const USER_TABLE = `
+export const USERS_TABLE = `
   CREATE TABLE IF NOT EXISTS users (
     id TEXT NOT NULL PRIMARY KEY,
     username TEXT NOT NULL UNIQUE,
@@ -6,29 +6,17 @@ export const USER_TABLE = `
   )
 `
 
-export const CHAT_TABLE = `
+export const CHATS_TABLE = `
   CREATE TABLE IF NOT EXISTS chats (
-    id TEXT NOT NULL PRIMARY KEY
-  )
-`
-
-export const CHAT_USERS_TABLE = `
-  CREATE TABLE IF NOT EXISTS chat_users (
     id TEXT NOT NULL PRIMARY KEY,
-    chat_id TEXT NOT NULL,
-    user_id TEXT NOT NULL,
+    user_1 TEXT NOT NULL,
+    user_2 TEXT NOT NULL,
 
-    FOREIGN KEY (chat_id) REFERENCES chats(id),
-    FOREIGN KEY (user_id) REFERENCES users(id)
+    UNIQUE(user_1, user_2)
   )
 `
 
-export const CHAT_USERS_INDEX = `
-  CREATE UNIQUE INDEX IF NOT EXISTS idx_chat_users
-  ON chat_users (chat_id, user_id)
-`
-
-export const MESSAGE_TABLE = `
+export const MESSGAGES_TABLE = `
   CREATE TABLE IF NOT EXISTS messages (
     id TEXT NOT NULL PRIMARY KEY,
     content TEXT NOT NULL,

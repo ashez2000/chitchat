@@ -1,30 +1,22 @@
 import { v4 as uuid } from 'uuid'
 import { db } from '../db/mod.js'
 
-/** Add user to given chat */
-const createChatUser = (chatId, userId) => {
-  const id = uuid()
-
-  const sql = `
-    INSERT INTO chat_users (id, chat_id, user_id)
-    VALUES (?, ?, ?)
-  `
-
-  db.prepare(sql).run(id, chatId, userId)
-}
-
 /**
  * Create new chat between two users
  */
 export const create = (users) => {
   const id = uuid()
 
+  // Sort is required to avoid duplicate entries for same users
+  // Order matters
+  users.sort()
+  const [user_1, user_2] = users
+
   const sql = `
-    INSERT INTO chats (id) VALUES (?)
+    INSERT INTO chats (id, user_1, user_2) VALUES (?, ?, ?)
   `
 
-  db.prepare(sql).run(id)
+  db.prepare(sql).run(id, user_1, user_2)
 
-  createChatUser(chatId, users[0])
-  createChatUser(chatId, users[1])
+  return id
 }

@@ -4,11 +4,9 @@ import * as schema from './schema.js'
 export const db = new Database('dev.db')
 
 export const migrate = () => {
-  db.prepare(schema.USER_TABLE).run()
-  db.prepare(schema.CHAT_TABLE).run()
-  db.prepare(schema.CHAT_USERS_TABLE).run()
-  db.prepare(schema.CHAT_USERS_INDEX).run()
-  db.prepare(schema.MESSAGE_TABLE).run()
+  db.prepare(schema.USERS_TABLE).run()
+  db.prepare(schema.CHATS_TABLE).run()
+  db.prepare(schema.MESSGAGES_TABLE).run()
 
   console.log('Migrations completed')
 }
