@@ -11,14 +11,20 @@ export const getMessages = (req, res) => {
   // If chat doen't exist return empty array
   const chatId = repo.chat.find([curUserId, userId])
   if (!chatId) {
-    return res.status(200).json([])
+    res.status(200).json({
+      messages: [],
+      chatId: null,
+    })
   }
 
   console.log(chatId)
 
   const messages = repo.message.find(chatId.id)
 
-  res.status(200).json(messages)
+  res.status(200).json({
+    messages,
+    chatId: chatId.id,
+  })
 }
 
 /**

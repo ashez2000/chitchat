@@ -12,33 +12,38 @@ import MessageForm from '../components/message-form'
 export default function ChatsPage() {
   const { userId } = useParams()
   const [messages, setMessages] = useState([])
+  const [chatId, setChatId] = useState('')
   const { user } = useUser()
 
   useEffect(() => {
     api.chat
       .getMessages(userId)
-      .then((messages) => {
-        setMessages(messages)
-        console.log(messages)
+      .then((data) => {
+        console.log(data)
+        setMessages(data.messages)
+        setChatId(data.chatId)
+        socket.emit('join_chat', { chatId: data.chatId })
       })
       .catch((err) => {
         alert('Error fetching messages')
       })
   }, [])
 
-  //   useEffect(() => {
-  // socket.emit('join_chat', { chatId })
-  // }, [])
+  useEffect(() => {
+    socket.on('chat_message', (data) => {
+      console.log(data)
+      const message = {
+        id: data.id,
+        content: data.content,
+        user_id: data.userId,
+      }
+      setMessages([data.message, ...messages])
+    })
 
-  // useEffect(() => {
-  // socket.on('chat_message', (data) => {
-  // setMessages([data.message, ...messages])
-  // })
-
-  // return () => {
-  // socket.off('chat_message')
-  // }
-  // }, [messages])
+    return () => {
+      socket.off('chat_message')
+    }
+  }, [messages])
 
   if (!user) {
     return <Navigate to="/signin" />
@@ -55,7 +60,7 @@ export default function ChatsPage() {
           </div>
         ))}
       </div>
-      <MessageForm userId={userId} />
+      <MessageForm userId={userId} chatId={chatId} />
     </MainLayout>
   )
 }
