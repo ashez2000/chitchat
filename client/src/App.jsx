@@ -34,7 +34,7 @@ export default function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/signup" element={<AuthPage isSignup={true} />} />
         <Route path="/signin" element={<AuthPage isSignup={false} />} />
-        <Route path="/chat/:chatId" element={<ChatsPage />} />
+        <Route path="/chats/:userId" element={<ChatsPage />} />
         <Route path="/search-users" element={<UserSearchPage />} />
       </Routes>
     </>

@@ -1,17 +1,18 @@
 import { useState } from 'react'
-import api from '../api'
 import { socket } from '../socket'
+import * as api from '../api/mod'
 
-export default function MessageForm({ chatId }) {
+export default function MessageForm({ userId }) {
   const [content, setContent] = useState('')
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      const res = await api.post(`/chat/${chatId}/message`, { content })
+      const res = await api.chat.createMessage(content, userId)
       console.log(res.data)
-      socket.emit('chat_message', chatId, res.data)
+      // socket.emit('chat_message', chatId, res.data)
     } catch (err) {
+      console.log(err)
       alert('Could not send message')
     } finally {
       setContent('')

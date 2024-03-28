@@ -27,7 +27,8 @@ export const find = (chatId) => {
   const sql = `
     SELECT id, content, created_at, chat_id, user_id
     FROM messages
-    WHERE chat_id = ?    
+    WHERE chat_id = ?
+    ORDER BY created_at DESC  
   `
 
   return db.prepare(sql).all(chatId)

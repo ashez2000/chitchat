@@ -14,7 +14,9 @@ export const getMessages = (req, res) => {
     return res.status(200).json([])
   }
 
-  const messages = repo.message.find(chatId)
+  console.log(chatId)
+
+  const messages = repo.message.find(chatId.id)
 
   res.status(200).json(messages)
 }
@@ -23,7 +25,7 @@ export const getMessages = (req, res) => {
  * Create new message between two users
  * @route POST /api/chats/:userId
  */
-export const createMessage = () => {
+export const createMessage = (req, res) => {
   const curUserId = req.user.id
   const userId = req.params.userId
   const content = req.body.content
@@ -36,7 +38,7 @@ export const createMessage = () => {
     return res.status(201).json(message)
   }
 
-  const message = repo.message.create(content, chatId, curUserId)
+  const message = repo.message.create(content, chatId.id, curUserId)
 
   res.status(201).json(message)
 }

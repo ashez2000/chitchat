@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import useUser from '../hooks/user'
-import { signout } from '../services/auth'
+import * as api from '../api/mod'
 
 export default function Header({ username }) {
   const { setUser } = useUser()
@@ -8,7 +8,7 @@ export default function Header({ username }) {
 
   const handleSignout = async () => {
     setUser(null)
-    await signout()
+    await api.auth.signout()
   }
 
   return (

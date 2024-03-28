@@ -16,7 +16,7 @@ export default function UserChats() {
       {users.map((u) => (
         <div className="card" key={u.id}>
           <div className="card-body">
-            <Link to={`/chat/${u.id}`}>{u.username}</Link>
+            <Link to={`/chats/${u.id}`}>{u.username}</Link>
           </div>
         </div>
       ))}

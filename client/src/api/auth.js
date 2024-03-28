@@ -11,7 +11,7 @@ export const signin = async (data) => {
 }
 
 export const signout = async () => {
-  const res = await api.put('/api/auth/signout')
+  const res = await api.post('/api/auth/signout')
   return res.data
 }
 

@@ -7,8 +7,7 @@ export async function notfound(req, res) {
 }
 
 export async function errorHandler(err, req, res, next) {
-  // console.error(err)
-  console.error(err.message)
+  console.error(err)
 
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
