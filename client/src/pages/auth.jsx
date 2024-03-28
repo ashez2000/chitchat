@@ -21,7 +21,7 @@ export default function AuthPage({ isSignup }) {
           src="/simplechat.png"
           alt="Simplechat Icon"
         />
-        <h1>Simplechat</h1>
+        <h1>ChitChat</h1>
       </div>
 
       <div className="col-10 col-sm-6 mx-auto">
