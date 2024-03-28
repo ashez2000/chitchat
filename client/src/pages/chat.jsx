@@ -30,14 +30,9 @@ export default function ChatsPage() {
   }, [])
 
   useEffect(() => {
-    socket.on('chat_message', (data) => {
-      console.log(data)
-      const message = {
-        id: data.id,
-        content: data.content,
-        user_id: data.userId,
-      }
-      setMessages([data.message, ...messages])
+    socket.on('chat_message', (message) => {
+      console.log(message)
+      setMessages([message, ...messages])
     })
 
     return () => {
@@ -54,7 +49,7 @@ export default function ChatsPage() {
       <div className="d-flex flex-column-reverse border p-3 mb-3">
         {messages.map((m) => (
           <div key={m.id}>
-            <p className={user.id === m.user_id ? 'float-end' : ''}>
+            <p className={user.id === m.userId ? 'float-end' : ''}>
               <span className="border px-2 py-1">{m.content}</span>
             </p>
           </div>

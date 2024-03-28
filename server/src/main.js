@@ -28,6 +28,7 @@ const main = () => {
 
     socket.on('chat_message', (chatId, message) => {
       console.log('Got message', message)
+      console.log('ChatId', chatId)
       io.to(chatId).emit('chat_message', message)
     })
   })

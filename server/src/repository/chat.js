@@ -3,6 +3,7 @@ import { db } from '../db/mod.js'
 
 /**
  * Create new chat between two users
+ * - Returns chatId (string)
  */
 export const create = (users) => {
   const id = uuid()
@@ -21,7 +22,10 @@ export const create = (users) => {
   return id
 }
 
-/** Find chat between two users */
+/**
+ * Find chat between two users
+ * - Returns chatId (string)
+ */
 export const find = (users) => {
   const [user_1, user_2] = users.sort()
 
@@ -30,5 +34,5 @@ export const find = (users) => {
     WHERE user_1 = ? AND user_2 = ?
   `
 
-  return db.prepare(sql).get(user_1, user_2)
+  return db.prepare(sql).get(user_1, user_2).id
 }

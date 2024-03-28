@@ -11,19 +11,17 @@ export const getMessages = (req, res) => {
   // If chat doen't exist return empty array
   const chatId = repo.chat.find([curUserId, userId])
   if (!chatId) {
-    res.status(200).json({
+    return res.status(200).json({
       messages: [],
       chatId: null,
     })
   }
 
-  console.log(chatId)
-
-  const messages = repo.message.find(chatId.id)
+  const messages = repo.message.find(chatId)
 
   res.status(200).json({
     messages,
-    chatId: chatId.id,
+    chatId,
   })
 }
 
@@ -38,13 +36,13 @@ export const createMessage = (req, res) => {
 
   const chatId = repo.chat.find([curUserId, userId])
   if (!chatId) {
-    const chat = repo.chat.create([curUserId, userId])
-    const message = repo.message.create(content, chat, curUserId)
+    const newChatId = repo.chat.create([curUserId, userId])
+    const message = repo.message.create(content, newChatId, curUserId)
 
     return res.status(201).json(message)
   }
 
-  const message = repo.message.create(content, chatId.id, curUserId)
+  const message = repo.message.create(content, chatId, curUserId)
 
   res.status(201).json(message)
 }

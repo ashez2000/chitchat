@@ -4,6 +4,7 @@ import { db } from '../db/mod.js'
 
 /**
  * Create new user
+ * - Returns { id, username }
  */
 export const create = ({ username, password }) => {
   const id = uuid()
@@ -23,6 +24,7 @@ export const create = ({ username, password }) => {
 
 /**
  * Find user by id
+ * - Returns { id, username, password } | undefined
  */
 export const findById = (id) => {
   return db
@@ -32,6 +34,7 @@ export const findById = (id) => {
 
 /**
  * Find user by username
+ * - Returns { id, username, password } | undefined
  */
 export const findByUsername = (username) => {
   return db
@@ -42,6 +45,7 @@ export const findByUsername = (username) => {
 /**
  * Search for users by partial matching username
  * without current user
+ * - Returns Array<{ id, username }>
  */
 export const search = (username, curUserId) => {
   return db
