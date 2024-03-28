@@ -20,3 +20,15 @@ export const create = (users) => {
 
   return id
 }
+
+/** Find chat between two users */
+export const find = (users) => {
+  const [user_1, user_2] = users.sort()
+
+  const sql = `
+    SELECT id FROM chats
+    WHERE user_1 = ? AND user_2 = ?
+  `
+
+  return db.prepare(sql).get(user_1, user_2)
+}

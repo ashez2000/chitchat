@@ -24,7 +24,7 @@ app.use(
 app.use(cookieParser())
 
 app.use('/api/auth', auth)
-app.use('/api/chat', chat)
+app.use('/api/chats', chat)
 app.use('/api/users', users)
 
 if (process.env.NODE_ENV === 'production') {
