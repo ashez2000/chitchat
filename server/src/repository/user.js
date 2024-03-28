@@ -41,9 +41,10 @@ export const findByUsername = (username) => {
 
 /**
  * Search for users by partial matching username
+ * without current user
  */
-export const search = (username) => {
+export const search = (username, curUserId) => {
   return db
-    .prepare('SELECT id, username, password FROM users WHERE username LIKE ?')
-    .all(`%${username}%`)
+    .prepare('SELECT id, username FROM users WHERE username LIKE ? AND id != ?')
+    .all(`%${username}%`, curUserId)
 }

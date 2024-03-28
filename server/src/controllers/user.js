@@ -1,24 +1,11 @@
-import db from '../utils/prisma.js'
-import { AppError } from '../utils/app-error.js'
+import * as repo from '../repository/mod.js'
 
-export async function findUsers(req, res) {
-  const searchTerm = req.query.search
-  const users = await db.user.findMany({
-    where: {
-      OR: [
-        {
-          name: {
-            contains: searchTerm,
-          },
-        },
-        {
-          username: {
-            contains: searchTerm,
-          },
-        },
-      ],
-    },
-  })
-
-  res.status(200).json({ users })
+/**
+ * Search users
+ * @route GET /api/users?search=
+ */
+export const search = (req, res) => {
+  const query = req.query.search ?? ''
+  const users = repo.user.search(query, req.user.id)
+  res.status(200).json(users)
 }

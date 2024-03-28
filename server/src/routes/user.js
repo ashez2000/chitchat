@@ -4,6 +4,6 @@ import * as user from '../controllers/user.js'
 
 const router = Router()
 
-router.get('/', authenticate, user.findUsers)
+router.get('/', authenticate, user.search)
 
 export default router
