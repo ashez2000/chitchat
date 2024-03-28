@@ -7,6 +7,8 @@ import useUser from '../hooks/user'
 export default function AuthPage({ isSignup }) {
   const { user } = useUser()
 
+  console.log(user)
+
   if (user) {
     return <Navigate to="/" />
   }

@@ -17,5 +17,5 @@ export const signout = async () => {
 
 export const profile = async () => {
   const res = await api.get('/api/auth/profile')
-  return res.data.user
+  return res.data
 }

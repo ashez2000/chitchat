@@ -8,7 +8,7 @@ import ChatsPage from './pages/chat'
 import UserSearchPage from './pages/user-search'
 
 import useUser from './hooks/user'
-import { getProfile } from './services/auth'
+import * as api from './api/mod'
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(true)
@@ -16,8 +16,9 @@ export default function App() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    getProfile()
-      .then(user => setUser(user))
+    api.auth
+      .profile()
+      .then((user) => setUser(user))
       .catch(() => navigate('/signin'))
       .finally(() => setIsLoading(false))
   }, [])

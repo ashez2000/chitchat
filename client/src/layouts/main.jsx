@@ -8,13 +8,13 @@ import { socket } from '../socket'
 export default function MainLayout(props) {
   const { user } = useUser()
 
-  useEffect(() => {
-    socket.connect()
+  //   useEffect(() => {
+  // socket.connect()
 
-    return () => {
-      socket.disconnect()
-    }
-  }, [])
+  // return () => {
+  // socket.disconnect()
+  // }
+  // }, [])
 
   if (!user) {
     return <Navigate to="/signin" />

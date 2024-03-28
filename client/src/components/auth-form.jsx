@@ -3,8 +3,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import toast from 'react-hot-toast'
 
 import { signinSchema, signupSchema } from '../schemas/auth'
-import { signin, signup } from '../services/auth'
 import useUser from '../hooks/user'
+import * as api from '../api/mod'
 
 const FormInput = ({ register, error, label, ...props }) => {
   return (
@@ -27,13 +27,13 @@ export default function AuthForm({ isSignup }) {
 
   const { setUser } = useUser()
 
-  const errToast = err => toast.error(err.response.data.message)
+  const errToast = (err) => toast.error(err.response.data.message)
 
-  const onSubmit = data => {
+  const onSubmit = (data) => {
     if (isSignup) {
-      signup(data).then(setUser).catch(errToast)
+      api.auth.signup(data).then(setUser).catch(errToast)
     } else {
-      signin(data).then(setUser).catch(errToast)
+      api.auth.signin(data).then(setUser).catch(errToast)
     }
   }
 
