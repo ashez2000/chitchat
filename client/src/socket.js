@@ -1,7 +1,5 @@
 import { io } from 'socket.io-client'
-
-const API_URL =
-  import.meta.env.MODE === 'production' ? '/' : 'http://localhost:3000'
+import { API_URL } from './env'
 
 export const socket = io(API_URL, {
   autoConnect: false,
