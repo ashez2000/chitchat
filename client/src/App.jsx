@@ -5,6 +5,8 @@ import { Toaster } from 'react-hot-toast'
 import HomePage from './pages/home'
 import AuthPage from './pages/auth'
 import ChatsPage from './pages/chat'
+import NotFound from './pages/not-found'
+import Loader from './pages/loader'
 
 import useUser from './hooks/user'
 import * as api from './api/mod'
@@ -23,7 +25,7 @@ export default function App() {
   }, [])
 
   if (isLoading) {
-    return null
+    return <Loader />
   }
 
   return (
@@ -34,6 +36,7 @@ export default function App() {
         <Route path="/signup" element={<AuthPage isSignup={true} />} />
         <Route path="/signin" element={<AuthPage isSignup={false} />} />
         <Route path="/chats/:userId" element={<ChatsPage />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </>
   )
