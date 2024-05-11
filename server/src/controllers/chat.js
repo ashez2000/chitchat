@@ -34,15 +34,15 @@ export const createMessage = (req, res) => {
   const userId = req.params.userId
   const content = req.body.content
 
+  // If chat not found create new chat
   const chatId = repo.chat.find([curUserId, userId])
+  console.log('createMessage CTRL: ChatId =', chatId)
   if (!chatId) {
     const newChatId = repo.chat.create([curUserId, userId])
     const message = repo.message.create(content, newChatId, curUserId)
-
     return res.status(201).json(message)
   }
 
   const message = repo.message.create(content, chatId, curUserId)
-
   res.status(201).json(message)
 }

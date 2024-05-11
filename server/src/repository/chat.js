@@ -34,5 +34,5 @@ export const find = (users) => {
     WHERE user_1 = ? AND user_2 = ?
   `
 
-  db.prepare(sql).get(user_1, user_2)?.id
+  return db.prepare(sql).get(user_1, user_2)?.id
 }

@@ -34,10 +34,6 @@ export default function ChatsPage() {
       console.log(message)
       setMessages([message, ...messages])
     })
-
-    return () => {
-      socket.off('chat_message')
-    }
   }, [messages])
 
   if (!user) {
