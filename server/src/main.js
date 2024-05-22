@@ -2,12 +2,18 @@ import 'dotenv/config'
 
 import http from 'node:http'
 import { Server } from 'socket.io'
+import { createClient } from 'redis'
+import { createAdapter } from '@socket.io/redis-adapter'
 
 import { migrate } from './db/mod.js'
 import app from './app.js'
 
-const main = () => {
+const main = async () => {
   migrate()
+
+  const pubClient = createClient({ url: process.env.REDIS_URL })
+  const subClient = pubClient.duplicate()
+  await Promise.all([pubClient.connect(), subClient.connect()])
 
   const server = http.createServer(app)
 
@@ -16,6 +22,7 @@ const main = () => {
       origin: 'http://localhost:5173',
       credentials: true,
     },
+    adapter: createAdapter(pubClient, subClient),
   })
 
   io.on('connection', (socket) => {

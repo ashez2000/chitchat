@@ -3,11 +3,12 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "start": "node src/main.js",
+    "start": "pm2 start ecosystem.config.cjs --env production",
     "dev": "nodemon src/main.js",
     "dev:prod": "cross-env NODE_ENV=production nodemon src/main.js"
   },
   "dependencies": {
+    "@socket.io/redis-adapter": "^8.3.0",
     "bcryptjs": "^2.4.3",
     "better-sqlite3": "^9.4.3",
     "cookie-parser": "^1.4.6",
@@ -18,10 +19,12 @@
     "express-async-errors": "^3.1.1",
     "fast-jwt": "^3.3.3",
     "morgan": "^1.10.0",
+    "redis": "^4.6.14",
     "socket.io": "^4.7.2",
     "uuid": "^9.0.1"
   },
   "devDependencies": {
-    "nodemon": "^3.0.1"
+    "nodemon": "^3.0.1",
+    "pm2": "^5.3.1"
   }
 }
