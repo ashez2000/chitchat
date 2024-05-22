@@ -8,5 +8,5 @@ export default function AuthLayout(props) {
     return <Navigate to="/" />
   }
 
-  return <main className="container">{props.children}</main>
+  return <main className="container h-full">{props.children}</main>
 }

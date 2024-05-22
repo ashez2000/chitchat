@@ -1,5 +1,6 @@
 body {
-  height: 90vh;
+  height: 100vh;
+  font-family: monospace;
 }
 
 .container {

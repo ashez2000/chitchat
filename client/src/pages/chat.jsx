@@ -31,7 +31,6 @@ export default function ChatsPage() {
 
   useEffect(() => {
     socket.on('chat_message', (message) => {
-      console.log(message)
       setMessages([message, ...messages])
     })
   }, [messages])
@@ -42,7 +41,8 @@ export default function ChatsPage() {
 
   return (
     <MainLayout>
-      <div className="d-flex flex-column-reverse border p-3 mb-3">
+      <div className="d-flex flex-column-reverse p-3 mb-3">
+        {messages.length === 0 && <div className="text-center">Say, Hi</div>}
         {messages.map((m) => (
           <div key={m.id}>
             <p className={user.id === m.userId ? 'float-end' : ''}>

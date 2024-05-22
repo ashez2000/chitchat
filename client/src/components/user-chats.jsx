@@ -14,10 +14,8 @@ export default function UserChats() {
   return (
     <div className="d-flex flex-column gap-3">
       {users.map((u) => (
-        <div className="card" key={u.id}>
-          <div className="card-body">
-            <Link to={`/chats/${u.id}`}>{u.username}</Link>
-          </div>
+        <div className="">
+          - <Link to={`/chats/${u.id}`}>{u.username}</Link>
         </div>
       ))}
     </div>

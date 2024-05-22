@@ -39,15 +39,6 @@ export default function AuthForm({ isSignup }) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      {isSignup && (
-        <FormInput
-          label="Name"
-          type="text"
-          register={register('name')}
-          error={errors.name}
-        />
-      )}
-
       <FormInput
         label="Username"
         type="text"
