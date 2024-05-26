@@ -34,7 +34,7 @@ const main = () => {
   })
 
   server.listen(3000, () => {
-    console.log('Listening on port', 3000)
+    console.log('Listening on port', 3000, process.env.NODE_ENV)
   })
 }
 

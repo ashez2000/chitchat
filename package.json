@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "start": "npm start --prefix server",
+    "start:prod": "npm run dev:prod --prefix server",
     "dev": "concurrently -k -p \"[{name}]\" -n \"server,client\" -c \"yellow.bold,cyan.bold\" \"npm run dev:server\" \"npm run dev:client\"",
     "dev:server": "npm run dev --prefix server",
     "dev:client": "npm run dev --prefix client",
