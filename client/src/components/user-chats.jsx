@@ -3,18 +3,25 @@ import { Link } from 'react-router-dom'
 import * as api from '../api/mod'
 import { useEffect, useState } from 'react'
 
+const LIMIT = 5
+
 export default function UserChats() {
   const [users, setUsers] = useState([])
   const [searchTerm, setSearchTerm] = useState('')
+  const [page, setPage] = useState(1)
 
   useEffect(() => {
     const timeoutId = setTimeout(
-      () => api.user.search(searchTerm).then(setUsers).catch(console.error),
+      () =>
+        api.user
+          .search(searchTerm, page, LIMIT)
+          .then(setUsers)
+          .catch(console.error),
       300
     )
 
     return () => clearTimeout(timeoutId)
-  }, [searchTerm])
+  }, [searchTerm, page])
 
   return (
     <div className="d-flex flex-column gap-3">
@@ -32,6 +39,28 @@ export default function UserChats() {
           - <Link to={`/chats/${u.id}`}>{u.username}</Link>
         </div>
       ))}
+
+      <hr />
+
+      <div>
+        {page !== 1 && (
+          <button
+            className="btn btn-sm btn-secondary me-3"
+            onClick={() => setPage((p) => p - 1)}
+          >
+            prev
+          </button>
+        )}
+
+        {users.length !== 0 && users.length == LIMIT && (
+          <button
+            className="btn btn-sm btn-secondary me-3"
+            onClick={() => setPage((p) => p + 1)}
+          >
+            next
+          </button>
+        )}
+      </div>
     </div>
   )
 }

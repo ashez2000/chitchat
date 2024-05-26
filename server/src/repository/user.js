@@ -47,8 +47,15 @@ export const findByUsername = (username) => {
  * without current user
  * - Returns Array<{ id, username }>
  */
-export const search = (username, curUserId) => {
-  return db
-    .prepare('SELECT id, username FROM users WHERE username LIKE ? AND id != ?')
-    .all(`%${username}%`, curUserId)
+export const search = (username, curUserId, page = 1, limit = 10) => {
+  const offset = (page - 1) * limit
+
+  const sql = `
+    SELECT id, username 
+    FROM users 
+    WHERE username LIKE ? AND id != ?
+    LIMIT ? OFFSET ?
+  `
+
+  return db.prepare(sql).all(`%${username}%`, curUserId, limit, offset)
 }

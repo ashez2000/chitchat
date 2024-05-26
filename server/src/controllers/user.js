@@ -6,6 +6,9 @@ import * as repo from '../repository/mod.js'
  */
 export const search = (req, res) => {
   const query = req.query.search ?? ''
-  const users = repo.user.search(query, req.user.id)
+  const page = req.query.page ?? 1
+  const limit = req.query.limit ?? 10
+
+  const users = repo.user.search(query, req.user.id, page, limit)
   res.status(200).json(users)
 }
