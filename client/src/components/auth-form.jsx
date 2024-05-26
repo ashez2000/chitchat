@@ -1,6 +1,7 @@
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import toast from 'react-hot-toast'
+import { socket } from '../socket'
 
 import { signinSchema, signupSchema } from '../schemas/auth'
 import useUser from '../hooks/user'
@@ -31,9 +32,21 @@ export default function AuthForm({ isSignup }) {
 
   const onSubmit = (data) => {
     if (isSignup) {
-      api.auth.signup(data).then(setUser).catch(errToast)
+      api.auth
+        .signup(data)
+        .then((user) => {
+          socket.emit('online', { userId: user.id })
+          setUser(user)
+        })
+        .catch(errToast)
     } else {
-      api.auth.signin(data).then(setUser).catch(errToast)
+      api.auth
+        .signin(data)
+        .then((user) => {
+          socket.emit('online', { userId: user.id })
+          setUser(user)
+        })
+        .catch(errToast)
     }
   }
 

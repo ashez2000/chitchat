@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 
 import * as api from '../api/mod'
 import { useEffect, useState } from 'react'
+import UserCard from './user-card'
 
 const LIMIT = 5
 
@@ -35,9 +36,7 @@ export default function UserChats() {
       </div>
 
       {users.map((u) => (
-        <div className="" key={u.id}>
-          - <Link to={`/chats/${u.id}`}>{u.username}</Link>
-        </div>
+        <UserCard key={u.id} user={u} />
       ))}
 
       <hr />

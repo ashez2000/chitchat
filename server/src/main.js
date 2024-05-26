@@ -5,6 +5,7 @@ import { Server } from 'socket.io'
 
 import { migrate } from './db/mod.js'
 import app from './app.js'
+import { setOnline } from './repository/user.js'
 
 const main = () => {
   migrate()
@@ -24,6 +25,16 @@ const main = () => {
     socket.on('join_chat', ({ chatId }) => {
       console.log('Joinde to room', chatId)
       socket.join(chatId)
+    })
+
+    socket.on('online', ({ userId }) => {
+      setOnline(userId, 1)
+      io.emit('online', { userId })
+    })
+
+    socket.on('offline', ({ userId }) => {
+      setOnline(userId, 0)
+      io.emit('offline', { userId })
     })
 
     socket.on('chat_message', (chatId, message) => {

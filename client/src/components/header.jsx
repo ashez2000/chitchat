@@ -1,13 +1,15 @@
 import { useNavigate } from 'react-router-dom'
 import useUser from '../hooks/user'
 import * as api from '../api/mod'
+import { socket } from '../socket'
 
 export default function Header({ username }) {
-  const { setUser } = useUser()
+  const { user, setUser } = useUser()
   const navigate = useNavigate()
 
   const handleSignout = async () => {
     setUser(null)
+    socket.emit('offline', { userId: user.id })
     await api.auth.signout()
   }
 

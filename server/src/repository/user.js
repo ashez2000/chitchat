@@ -45,17 +45,27 @@ export const findByUsername = (username) => {
 /**
  * Search for users by partial matching username
  * without current user
- * - Returns Array<{ id, username }>
+ * - Returns Array<{ id, username, isOnline }>
  */
 export const search = (username, curUserId, page = 1, limit = 10) => {
   const offset = (page - 1) * limit
 
   const sql = `
-    SELECT id, username 
+    SELECT id, username, is_online AS isOnline 
     FROM users 
     WHERE username LIKE ? AND id != ?
     LIMIT ? OFFSET ?
   `
 
   return db.prepare(sql).all(`%${username}%`, curUserId, limit, offset)
+}
+
+export const setOnline = (userId, value) => {
+  const sql = `
+    UPDATE users
+    SET is_online = ? 
+    WHERE id = ?
+  `
+
+  db.prepare(sql).run(value, userId)
 }
