@@ -1,26 +1,27 @@
-import 'dotenv/config'
-
+import fs from 'node:fs'
 import bcrypt from 'bcryptjs'
 import Database from 'better-sqlite3'
 import { v4 as uuid } from 'uuid'
+import 'dotenv/config'
 
-import { migrate } from '../src/db/mod.js'
 import users from './users.js'
 
-const db = new Database(process.env.DATABASE_URL)
+const main = () => {
+  const db = new Database(process.env.DATABASE_URL)
 
-const main = async () => {
-  migrate()
+  // schema migration
+  const schema = fs.readFileSync('./schema.sql', 'utf-8')
+  db.exec(schema)
+
   const password = bcrypt.hashSync('123456')
-
-  const sql = db.prepare(
+  const stmt = db.prepare(
     'INSERT INTO users (id, username, password) VALUES (?, ?, ?)'
   )
 
   const insertManyUsers = db.transaction((users) => {
     for (const u of users) {
       const id = uuid()
-      sql.run(id, u, password)
+      stmt.run(id, u, password)
     }
   })
 
