@@ -26,6 +26,7 @@ const main = () => {
   })
 
   insertManyUsers(users)
+  console.log('Data migrated')
 }
 
 main()
