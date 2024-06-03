@@ -6,7 +6,7 @@
     "start": "node src/main.js",
     "dev": "nodemon src/main.js",
     "dev:prod": "cross-env NODE_ENV=production nodemon src/main.js",
-    "migrate": "rm *.db && node seed/main.js"
+    "migrate": "rm -f ./*.db && node seed/main.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
