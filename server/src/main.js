@@ -3,6 +3,7 @@ import 'dotenv/config'
 import http from 'node:http'
 import { Server } from 'socket.io'
 
+import * as env from './config/env.js'
 import { migrate } from './db/mod.js'
 import { handleSocket } from './socket.js'
 import app from './app.js'
@@ -21,8 +22,8 @@ const main = () => {
 
   handleSocket(io)
 
-  server.listen(3000, () => {
-    console.log('Listening on port', 3000, process.env.NODE_ENV)
+  server.listen(env.PORT, () => {
+    console.log(`main: Listening on port ${env.PORT} (${env.NODE_ENV})`)
   })
 }
 
