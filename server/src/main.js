@@ -4,13 +4,12 @@ import http from 'node:http'
 import { Server } from 'socket.io'
 
 import * as env from './config/env.js'
-import { migrate } from './db/mod.js'
 import { handleSocket } from './socket.js'
 import { buildApp } from './app.js'
+// import { migrate } from './db/mod.js'
+// import { migrate as pgMigrate } from './config/db/pg.js'
 
-const main = () => {
-  migrate()
-
+const main = async () => {
   const app = buildApp()
   const server = http.createServer(app)
 
