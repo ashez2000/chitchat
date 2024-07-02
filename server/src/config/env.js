@@ -13,4 +13,5 @@ const load = (name) => {
 export const PORT = load('PORT')
 export const NODE_ENV = load('NODE_ENV')
 export const DATABASE_URL = load('DATABASE_URL')
+export const PG_CONN_STRING = load('PG_CONN_STRING')
 export const JWT_SECRET = load('JWT_SECRET')
