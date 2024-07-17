@@ -1,10 +1,9 @@
-import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 
 import * as api from '../api/mod'
-import { useEffect, useState } from 'react'
 import UserCard from './user-card'
 
-const LIMIT = 5
+const LIMIT = 8
 
 export default function UserChats() {
   const [users, setUsers] = useState([])

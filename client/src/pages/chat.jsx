@@ -46,7 +46,7 @@ export default function ChatsPage() {
         {messages.map((m) => (
           <div key={m.id}>
             <p className={user.id === m.userId ? 'float-end' : ''}>
-              <span className="border px-2 py-1">{m.content}</span>
+              <span className="border rounded px-2 py-1">{m.content}</span>
             </p>
           </div>
         ))}

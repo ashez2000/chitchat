@@ -30,8 +30,8 @@ const UserCard = ({ user }) => {
   }, [])
 
   return (
-    <div className="" key={user.id}>
-      - <Link to={`/chats/${user.id}`}>{user.username}</Link>
+    <div className="fs-4" key={user.id}>
+      <Link to={`/chats/${user.id}`}> {user.username}</Link>
       {isOnline !== 0 && <span className="ms-2 text-success">(online)</span>}
     </div>
   )
