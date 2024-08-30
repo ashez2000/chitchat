@@ -1,4 +1,3 @@
-import './bootstrap.css'
 import './index.css'
 
 import React from 'react'
