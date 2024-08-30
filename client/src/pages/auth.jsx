@@ -12,35 +12,37 @@ export default function AuthPage({ isSignup }) {
 
   return (
     <AuthLayout>
-      <div className="d-flex gap-3 justify-content-center align-items-center my-5">
-        <img className="img-" src="/simplechat.png" alt="Simplechat Icon" />
-        <h1 className="fw-bold">ChitChat</h1>
-      </div>
+      <div className="max-w-sm mx-auto space-y-5">
+        <div className="flex flex-col items-center my-5">
+          <div className="flex flex-col items-center gap-3">
+            <img className="h-14 w-14" src="/simplechat.png" alt="chitchat icon" />
+            <h1 className="text-5xl font-bold mb-2">ChitChat</h1>
+          </div>
+          <p className="text-xl">"Connect. Chat. Simplify."</p>
+        </div>
 
-      <div className="col-10 col-sm-6 mx-auto">
-        <h3 className="mb-3">{isSignup ? 'Sign Up' : 'Sign In'}</h3>
+        <div className="">
+          <h3 className="text-2xl">{isSignup ? 'SignUp' : 'SignIn'}</h3>
+          <div className="text-lg">
+            {isSignup ? (
+              <>
+                Already have an account?{' '}
+                <span className="text-blue-500">
+                  <Link to="/signin">SignIn</Link>
+                </span>
+              </>
+            ) : (
+              <>
+                Dont have an account?{' '}
+                <span className="text-blue-500">
+                  <Link to="/signup">SignUp</Link>
+                </span>
+              </>
+            )}
+          </div>
+        </div>
 
         <AuthForm isSignup={isSignup} />
-
-        <hr />
-
-        <p className="text-center">
-          {isSignup ? (
-            <>
-              <div>Already have an account?</div>
-              <div>
-                <Link to="/signin">Sign In</Link>
-              </div>
-            </>
-          ) : (
-            <>
-              <div>Dont have an account?</div>
-              <div>
-                <Link to="/signup">Sign Up</Link>
-              </div>
-            </>
-          )}
-        </p>
       </div>
     </AuthLayout>
   )

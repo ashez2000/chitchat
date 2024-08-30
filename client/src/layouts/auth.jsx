@@ -8,5 +8,9 @@ export default function AuthLayout(props) {
     return <Navigate to="/" />
   }
 
-  return <main className="container h-full">{props.children}</main>
+  return (
+    <main className="max-w-3xl min-h-[96vh] mx-auto px-3 border-x-[1px] border-zinc-300">
+      {props.children}
+    </main>
+  )
 }
