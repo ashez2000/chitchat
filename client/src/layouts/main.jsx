@@ -21,7 +21,7 @@ export default function MainLayout(props) {
   }
 
   return (
-    <main className="container h-full">
+    <main className="max-w-2xl mx-auto px-3">
       <Header username={user.username} />
       <hr />
       {props.children}

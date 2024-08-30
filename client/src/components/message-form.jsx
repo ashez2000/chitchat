@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { socket } from '../socket'
 import * as api from '../api/mod'
+import { Input } from './ui/input'
+import { Button } from './ui/button'
 
 export default function MessageForm({ userId, chatId }) {
   const [content, setContent] = useState('')
@@ -21,14 +23,14 @@ export default function MessageForm({ userId, chatId }) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="input-group mb-3">
-        <input
+      <div className="space-y-3">
+        <Input
           type="text"
           className="form-control"
           value={content}
           onChange={(e) => setContent(e.target.value)}
         />
-        <input className="btn btn-primary" type="submit" value="send" />
+        <Button type="submit">Send</Button>
       </div>
     </form>
   )

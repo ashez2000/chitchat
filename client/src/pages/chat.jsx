@@ -41,17 +41,22 @@ export default function ChatsPage() {
 
   return (
     <MainLayout>
-      <div className="d-flex flex-column-reverse p-3 mb-3">
-        {messages.length === 0 && <div className="text-center">Say, Hi</div>}
-        {messages.map((m) => (
-          <div key={m.id}>
-            <p className={user.id === m.userId ? 'float-end' : ''}>
-              <span className="border rounded px-2 py-1">{m.content}</span>
-            </p>
-          </div>
-        ))}
+      <div className="max-w-md mx-auto">
+        <div className="flex flex-col my-3">
+          {messages.length === 0 && <div className="text-center">Say, Hi</div>}
+          {messages.map((m) => (
+            <div key={m.id}>
+              <p className={user.id === m.userId ? 'float-end' : ''}>
+                <span className="border rounded-md px-2 py-1">{m.content}</span>
+              </p>
+            </div>
+          ))}
+        </div>
+
+        <hr className='my-3' />
+
+        <MessageForm userId={userId} chatId={chatId} />
       </div>
-      <MessageForm userId={userId} chatId={chatId} />
     </MainLayout>
   )
 }

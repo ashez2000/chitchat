@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { socket } from '../socket'
+import { Button } from './ui/button'
 
 const UserCard = ({ user }) => {
   const [isOnline, setIsOnline] = useState(user.isOnline)
@@ -30,10 +31,12 @@ const UserCard = ({ user }) => {
   }, [])
 
   return (
-    <div className="fs-4" key={user.id}>
-      <Link to={`/chats/${user.id}`}> {user.username}</Link>
-      {isOnline !== 0 && <span className="ms-2 text-success">(online)</span>}
-    </div>
+    <Button variant="outline" asChild>
+      <Link to={`/chats/${user.id}`}>
+        {user.username}
+        {isOnline !== 0 && <span className="ms-2 text-green-500">(online)</span>}
+      </Link>
+    </Button>
   )
 }
 

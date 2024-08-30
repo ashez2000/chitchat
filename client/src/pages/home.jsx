@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom'
 import UserChats from '../components/user-chats'
 import MainLayout from '../layouts/main'
 
