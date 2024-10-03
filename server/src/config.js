@@ -1,5 +1,12 @@
-import envload from './utils/envload.js'
+export const PORT = load('PORT')
+export const NODE_ENV = load('NODE_ENV')
+export const MONGO_URI = load('MONGO_URI')
+export const JWT_SECRET = load('JWT_SECRET')
 
-export const PORT = envload('PORT')
-export const NODE_ENV = envload('PORT')
-export const JWT_SECRET = envload('JWT_SECRET')
+function load(name) {
+  const value = process.env[name]
+  if (value == undefined) {
+    throw new Error(`${name} undefined`)
+  }
+  return value
+}
