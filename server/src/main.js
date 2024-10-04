@@ -14,7 +14,6 @@ async function main() {
 
   try {
     // Mongodb connection
-    console.log({ MONGO_URI })
     const conn = await mongoose.connect(MONGO_URI)
     console.log('Connected to mongodb:', conn.connection.host)
 

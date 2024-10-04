@@ -1,15 +1,24 @@
 import bcrypt from 'bcryptjs'
+
+import { User } from '../model/user.js'
 import { AppError } from '../utils/app-error.js'
 import { signToken } from '../utils/jwt.js'
-import * as repo from '../repository/mod.js'
 
 /**
  * Signup new user
  * @route POST /api/auth/signup
  */
-export const signup = (req, res) => {
+export async function signup(req, res) {
   const { username, password } = req.body
-  const user = repo.user.create({ username, password })
+
+  let user = await User.findOne({ username })
+  if (user) {
+    throw new AppError('Username already exists', 400)
+  }
+
+  const hash = bcrypt.hashSync(password)
+  user = await User.create({ username, password: hash })
+
   sendTokenResponse(user, res)
 }
 
@@ -17,10 +26,10 @@ export const signup = (req, res) => {
  * Signin user
  * @route POST /api/auth/signin
  */
-export const signin = (req, res) => {
+export async function signin(req, res) {
   const { username, password } = req.body
 
-  const user = repo.user.findByUsername(username)
+  const user = await User.findOne({ username })
   if (!user) {
     throw new AppError('Invalid username or password', 401)
   }
@@ -38,7 +47,7 @@ export const signin = (req, res) => {
  * Signout user
  * @route POST /api/auth/signout
  */
-export const signout = (req, res) => {
+export function signout(req, res) {
   res.clearCookie('token')
   res.status(200).json({})
 }
@@ -47,8 +56,8 @@ export const signout = (req, res) => {
  * Get user profile
  * @route GET /api/auth/profile
  */
-export const profile = (req, res) => {
-  const user = repo.user.findById(req.user.id)
+export async function profile(req, res) {
+  const user = await User.findById(req.user.id)
   if (!user) {
     throw new AppError('user not found', 404)
   }
@@ -60,7 +69,7 @@ export const profile = (req, res) => {
 }
 
 /** Returns response with jwt cookie and user data */
-const sendTokenResponse = (user, res) => {
+function sendTokenResponse(user, res) {
   const { id, username } = user
   const token = signToken(id)
 
