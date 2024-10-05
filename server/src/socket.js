@@ -1,4 +1,4 @@
-import { setOnline } from './repository/user.js'
+import { User } from './model/user.js'
 
 export function handleSocket(io) {
   io.on('connection', (socket) => {
@@ -8,13 +8,13 @@ export function handleSocket(io) {
       socket.join(chatId)
     })
 
-    socket.on('online', ({ userId }) => {
-      setOnline(userId, 1)
+    socket.on('online', async ({ userId }) => {
+      await setOnline(userId, 1)
       io.emit('online', { userId })
     })
 
-    socket.on('offline', ({ userId }) => {
-      setOnline(userId, 0)
+    socket.on('offline', async ({ userId }) => {
+      await setOnline(userId, 0)
       io.emit('offline', { userId })
     })
 
@@ -22,4 +22,8 @@ export function handleSocket(io) {
       io.to(chatId).emit('chat_message', message)
     })
   })
+}
+
+async function setOnline(userId, status) {
+  await User.findByIdAndUpdate(userId, { isOnline: status })
 }
