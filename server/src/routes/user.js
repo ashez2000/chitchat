@@ -5,5 +5,6 @@ import * as user from '../controllers/user.js'
 const router = Router()
 
 router.get('/', authenticate, user.search)
+router.get('/:id', authenticate, user.findById)
 
 export default router

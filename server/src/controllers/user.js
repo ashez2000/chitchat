@@ -1,4 +1,22 @@
+import { AppError } from '../utils/app-error.js'
 import { User } from '../model/user.js'
+
+/**
+ * Find user by id
+ * @route GET /api/users/{id}
+ */
+export async function findById(req, res) {
+  const user = await User.findById(req.params.id)
+  if (!user) {
+    throw new AppError('User not found', 404)
+  }
+
+  res.status(200).json({
+    id: user._id,
+    username: user.username,
+    isOnline: user.isOnline,
+  })
+}
 
 /**
  * Search users
