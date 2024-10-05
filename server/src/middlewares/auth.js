@@ -1,10 +1,9 @@
 import { createVerifier } from 'fast-jwt'
 
+import { JWT_SECRET } from '../config.js'
 import { AppError } from '../utils/app-error.js'
-import envload from '../utils/envload.js'
 
-const secret = envload('JWT_SECRET')
-const verify = createVerifier({ key: secret })
+const verify = createVerifier({ key: JWT_SECRET })
 
 export function authenticate(req, res, next) {
   const token = req.cookies.token
