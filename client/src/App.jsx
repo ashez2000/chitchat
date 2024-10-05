@@ -4,7 +4,7 @@ import { Toaster } from 'react-hot-toast'
 
 const Home = lazy(() => import('./pages/home'))
 const Auth = lazy(() => import('./pages/auth'))
-const Chat = lazy(() => import('./pages/not-found'))
+const Chat = lazy(() => import('./pages/chat'))
 const NotFound = lazy(() => import('./pages/not-found'))
 
 import Loader from './pages/loader'

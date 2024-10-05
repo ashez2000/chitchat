@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Link, Navigate, useParams } from 'react-router-dom'
+import { Navigate, useParams } from 'react-router-dom'
 
 import * as api from '../api/mod'
 import { socket } from '../socket'
@@ -19,7 +19,6 @@ export default function ChatsPage() {
     api.chat
       .getMessages(userId)
       .then((data) => {
-        console.log(data)
         setMessages(data.messages)
         setChatId(data.chatId)
         socket.emit('join_chat', { chatId: data.chatId })
@@ -31,7 +30,7 @@ export default function ChatsPage() {
 
   useEffect(() => {
     socket.on('chat_message', (message) => {
-      setMessages([message, ...messages])
+      setMessages([...messages, message])
     })
   }, [messages])
 
@@ -42,18 +41,18 @@ export default function ChatsPage() {
   return (
     <MainLayout>
       <div className="max-w-md mx-auto">
-        <div className="flex flex-col my-3">
+        <div className="flex flex-col gap-3 my-3">
           {messages.length === 0 && <div className="text-center">Say, Hi</div>}
           {messages.map((m) => (
-            <div key={m.id}>
-              <p className={user.id === m.userId ? 'float-end' : ''}>
+            <div key={m._id}>
+              <p className={user.id === m.user ? 'float-end' : ''}>
                 <span className="border rounded-md px-2 py-1">{m.content}</span>
               </p>
             </div>
           ))}
         </div>
 
-        <hr className='my-3' />
+        <hr className="my-3" />
 
         <MessageForm userId={userId} chatId={chatId} />
       </div>

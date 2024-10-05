@@ -18,7 +18,7 @@ export async function getMessages(req, res) {
     })
   }
 
-  const messages = await Message.find({ chat: chat.id }).sort({ createdAt: 'desc' })
+  const messages = await Message.find({ chat: chat.id }).sort({ createdAt: 'asc' })
 
   res.status(200).json({
     messages,
