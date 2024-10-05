@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
+import { format, isToday, isYesterday } from 'date-fns'
 
 import * as api from '../api/mod'
 import { socket } from '../socket'
@@ -60,10 +61,16 @@ export default function ChatsPage() {
         <div className="flex flex-col gap-3 my-3">
           {messages.length === 0 && <div className="text-center">Say, Hi</div>}
           {messages.map((m) => (
+            // TODO: Refactor styles
             <div key={m._id}>
-              <p className={user.id === m.user ? 'float-end' : ''}>
-                <span className="border rounded-md px-2 py-1">{m.content}</span>
-              </p>
+              <div className={user.id === m.user ? 'float-end' : 'float-start'}>
+                <div className="flex flex-col border rounded-md px-2 py-1">
+                  <p>{m.content}</p>
+                  <div className="text-[12px] font-light text-zinc-600">
+                    {formatDate(m.createdAt)}
+                  </div>
+                </div>
+              </div>
             </div>
           ))}
         </div>
@@ -74,4 +81,10 @@ export default function ChatsPage() {
       </div>
     </MainLayout>
   )
+}
+
+function formatDate(date) {
+  if (isToday(date)) return `today ${format(date, 'hh:mm a')}`
+  if (isYesterday(date)) return `yesterday ${format(date, 'hh:mm a')}`
+  return format(date, 'dd/MM/yyyy hh:mm a')
 }
