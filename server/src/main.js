@@ -12,6 +12,8 @@ async function main() {
   const app = buildApp()
   const server = http.createServer(app)
 
+  const port = process.argv[2] ?? PORT ?? 3000
+
   try {
     // Mongodb connection
     const conn = await mongoose.connect(MONGO_URI)
@@ -26,8 +28,8 @@ async function main() {
 
     handleSocket(io)
 
-    server.listen(PORT, () => {
-      console.log(`Listening on port ${PORT} (${NODE_ENV})`)
+    server.listen(port, () => {
+      console.log(`Listening on port ${port} (${NODE_ENV})`)
     })
   } catch (err) {
     console.log(err)

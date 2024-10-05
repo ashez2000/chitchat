@@ -7,7 +7,7 @@
     "dev": "concurrently -k -p \"[{name}]\" -n \"server,client\" -c \"yellow.bold,cyan.bold\" \"npm run dev:server\" \"npm run dev:client\"",
     "dev:server": "npm run dev --prefix server",
     "dev:client": "npm run dev --prefix client",
-    "build": "npm run build --prefix client && npm run migrate --prefix server"
+    "build": "npm run build --prefix client"
   },
   "devDependencies": {
     "concurrently": "^8.2.2"
