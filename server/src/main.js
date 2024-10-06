@@ -22,8 +22,8 @@ async function main() {
     console.log('Connected to mongodb:', conn.connection.host)
 
     // Redis
-    const pubClient = new Redis(REDIS_URL)
-    const subClient = pubClient.duplicate()
+    const pubClient = new Redis(REDIS_URL).on('error', (e) => console.log('redis:', e))
+    const subClient = pubClient.duplicate().on('error', (e) => console.log('redis:', e))
 
     const io = new Server(server, {
       cors: {

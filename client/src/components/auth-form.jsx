@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import toast from 'react-hot-toast'
@@ -18,10 +19,17 @@ import { socket } from '../socket'
 import { signinSchema, signupSchema } from '../schemas/auth'
 import useUser from '../hooks/user'
 import * as api from '../api/mod'
+import Spinner from './spinner'
 
 export default function AuthForm({ isSignup }) {
+  const [loading, setLoading] = useState(false)
+
   const form = useForm({
     resolver: zodResolver(isSignup ? signupSchema : signinSchema),
+    defaultValues: {
+      username: '',
+      password: '',
+    },
   })
 
   const { setUser } = useUser()
@@ -29,6 +37,8 @@ export default function AuthForm({ isSignup }) {
   const errToast = (err) => toast.error(err.response.data.message)
 
   const onSubmit = (data) => {
+    setLoading(true)
+
     if (isSignup) {
       api.auth
         .signup(data)
@@ -46,6 +56,8 @@ export default function AuthForm({ isSignup }) {
         })
         .catch(errToast)
     }
+
+    setLoading(false)
   }
 
   return (
@@ -79,7 +91,11 @@ export default function AuthForm({ isSignup }) {
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+
+        <Button disabled={loading} type="submit">
+          Submit
+          {loading && <Spinner />}
+        </Button>
       </form>
     </Form>
   )

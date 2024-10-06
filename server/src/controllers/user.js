@@ -26,11 +26,15 @@ export async function search(req, res) {
   const query = req.query.search ?? ''
   const page = req.query.page ?? 1
   const limit = req.query.limit ?? 10
+  const curUserId = req.user.id
 
   const users = await User.find({
     username: {
       $regex: query,
       $options: 'i',
+    },
+    _id: {
+      $ne: curUserId,
     },
   })
     .skip((page - 1) * limit)
