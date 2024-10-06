@@ -1,11 +1,11 @@
 # chitchat
 
-Simple chat app built using socket.io, sqlite and react
+Real-Time Chat application build using Socket.IO, MongoDb, Redis and React
 
 # Features
 
 - User authentication
-- Real-Time messaging
+- Real-Time private messaging
 
 # Run locally
 
