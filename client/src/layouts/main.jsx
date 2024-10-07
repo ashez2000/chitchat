@@ -10,8 +10,13 @@ export default function MainLayout(props) {
 
   useEffect(() => {
     socket.connect()
+    socket.on('connect', () => {
+      socket.emit('foobar')
+    })
 
     return () => {
+      // TODO: Is this required
+      socket.off('connect')
       socket.disconnect()
     }
   }, [])
