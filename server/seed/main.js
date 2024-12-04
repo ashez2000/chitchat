@@ -1,8 +1,5 @@
 import mongoose from 'mongoose'
-import fs from 'node:fs'
 import bcrypt from 'bcryptjs'
-import Database from 'better-sqlite3'
-import { v4 as uuid } from 'uuid'
 import 'dotenv/config'
 
 import { User } from '../src/model/user.js'
