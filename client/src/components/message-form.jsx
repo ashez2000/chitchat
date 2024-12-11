@@ -20,6 +20,7 @@ export default function MessageForm({ userId, chatId }) {
     try {
       const message = await api.chat.createMessage(content, userId)
       socket.emit('chat_message', chatId, message)
+      socket.emit('notify', userId, message)
     } catch (err) {
       toast.error('Could not send message')
     } finally {
