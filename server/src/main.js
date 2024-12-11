@@ -9,6 +9,7 @@ import { createAdapter } from '@socket.io/redis-adapter'
 import { PORT, MONGO_URI, REDIS_URL, NODE_ENV } from './config.js'
 import { handleSocket } from './socket.js'
 import { buildApp } from './app.js'
+import logger from './logger.js'
 
 async function main() {
   const app = buildApp()
@@ -19,11 +20,11 @@ async function main() {
   try {
     // Mongodb connection
     const conn = await mongoose.connect(MONGO_URI)
-    console.log('Connected to mongodb:', conn.connection.host)
+    logger.info(`Connected to mongodb: ${conn.connection.host}`)
 
     // Redis
-    const pubClient = new Redis(REDIS_URL).on('error', (e) => console.log('redis:', e))
-    const subClient = pubClient.duplicate().on('error', (e) => console.log('redis:', e))
+    const pubClient = new Redis(REDIS_URL).on('error', (e) => logger.error(e))
+    const subClient = pubClient.duplicate().on('error', (e) => logger.error(e))
 
     const io = new Server(server, {
       cors: {
@@ -36,7 +37,7 @@ async function main() {
     handleSocket(io)
 
     server.listen(port, () => {
-      console.log(`Listening on port ${port} (${NODE_ENV})`)
+      logger.info(`Listening on port: ${port} (${NODE_ENV})`)
     })
   } catch (err) {
     console.log(err)

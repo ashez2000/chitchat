@@ -4,21 +4,17 @@ import useUser from '../hooks/user'
 import Header from '../components/header'
 import { useEffect } from 'react'
 import { socket } from '../socket'
+import toast from 'react-hot-toast'
 
 export default function MainLayout(props) {
   const { user } = useUser()
 
   useEffect(() => {
     socket.connect()
-    socket.on('connect', () => {
-      socket.emit('foobar')
+    socket.emit('join_notify', { userId: user.id })
+    socket.on(`notify`, (username, message) => {
+      toast(`${username}: ${message.content}`)
     })
-
-    return () => {
-      // TODO: Is this required
-      socket.off('connect')
-      socket.disconnect()
-    }
   }, [])
 
   if (!user) {

@@ -1,12 +1,18 @@
+import logger from './logger.js'
 import { User } from './model/user.js'
 import redis from './redis.js'
 
 export function handleSocket(io) {
   io.on('connection', (socket) => {
-    console.log(`socket:connected: ${socket.id}`)
+    logger.info(`socket:connected: ${socket.id}`)
 
     socket.on('join_chat', ({ chatId }) => {
       socket.join(chatId)
+    })
+
+    socket.on('join_notify', ({ userId }) => {
+      logger.info(`socket:user ${userId} joining notify`)
+      socket.join(`notify:${userId}`)
     })
 
     socket.on('online', async ({ userId }) => {
@@ -23,11 +29,18 @@ export function handleSocket(io) {
       io.to(chatId).emit('chat_message', message)
     })
 
-    socket.on('disconnect', async () => {
-      console.log(`socket:disconnected: ${socket.id}`)
-      const userId = await redis.get(socket.id)
-      await redis.del(socket.id)
-      io.emit('offline', { userId })
+    // TODO: refactor to user sockey instead of room
+    socket.on('notify', async (userId, message) => {
+      const user = await User.findById(userId)
+      // TODO: handle null case
+      if (!user) {
+        return
+      }
+      io.to(`notify:${userId}`).emit('notify', user.username, message)
+    })
+
+    socket.on('disconnect', (e) => {
+      logger.info(e)
     })
   })
 }
